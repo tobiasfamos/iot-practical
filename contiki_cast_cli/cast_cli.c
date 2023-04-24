@@ -128,6 +128,7 @@ PROCESS_THREAD(shell_unicast_process, ev, data)
 /*---------------------------------------------------------------------------*/
 // the broadcast channel
 #define BROADCAST_CHANNEL 128
+#define UNICAST_CHANNEL 146
 // the broadcast receive callback
 static void recv_bc(struct broadcast_conn *c, rimeaddr_t *from)
 {
@@ -184,6 +185,7 @@ PROCESS_THREAD(exercise_4_process, ev, data)
   PROCESS_BEGIN();
   serial_shell_init();
   broadcast_open(&bc, BROADCAST_CHANNEL, &broadcast_call);
+  unicast_open(&uc, UNICAST_CHANNEL, &unicast_callbacks);
   shell_register_command(&blink_command);
   shell_register_command(&broadcast_command);
   shell_register_command(&unicast_command);
