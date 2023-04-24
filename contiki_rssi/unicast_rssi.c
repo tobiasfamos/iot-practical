@@ -59,7 +59,7 @@ static void recv_uc(struct unicast_conn *c, const rimeaddr_t *from)
 	  rimeaddr_t addr;
 	  packetbuf_copyfrom(&tmReceived, sizeof(tmReceived));
 
-	  addr.u8[0] = (node_id == 77 ? 6: 77);
+	  addr.u8[0] = (node_id == 1 ? 33: 1);
 	  addr.u8[1] = 0;
 	  if(!rimeaddr_cmp(&addr, &rimeaddr_node_addr)) {
 		  unicast_send(&uc, &addr);
@@ -67,6 +67,10 @@ static void recv_uc(struct unicast_conn *c, const rimeaddr_t *from)
   }
   else {
       printf("original sender was ME!\n");
+      // Get the RSSI of the received packet
+      int8_t rssi = packetbuf_attr(PACKETBUF_ATTR_RSSI);
+      printf("Received packet with RSSI %d\n", rssi);
+
 	  rtt = clock_time();
 	  rtt -= tmReceived.time;
 	  printf("round trip time (ms): %d\n", (1000L *(uint16_t)rtt) / CLOCK_SECOND);
@@ -95,15 +99,11 @@ PROCESS_THREAD(example_unicast_process, ev, data)
 	  packetbuf_copyfrom(&tmSent, sizeof(tmSent));
 
 
-	  /* NB: replace the node ids, template based on the node id 77 & 6
-	 in case I am node 77, choose 6 as destination */
-      	if(node_id == 77) {
-          addr.u8[0] = 6;
-      	}
-      	  /* In case I am node 6, choose 77, etc */
-      	else {
-          addr.u8[0] = 77;
-      	}
+	 if(node_id == 1){
+        addr.u8[0] = 33;
+     }else {
+        addr.u8[0] = 1;
+     }
 	  addr.u8[1] = 0;
 	  if(!rimeaddr_cmp(&addr, &rimeaddr_node_addr)) {
 		  unicast_send(&uc, &addr);
