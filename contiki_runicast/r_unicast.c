@@ -58,9 +58,9 @@ static void recv_runicast(struct runicast_conn *c, rimeaddr_t *from, uint8_t seq
     /* prepare the unicast packet to be sent. Write the contents of the struct, where we
      * have just written the time and the id into, to the packet we intend to send
      */
-    tmSent.time = tmpReceived.time;
+    tmSent.time = tmReceived.time;
     tmSent.originator = node_id;
-    packetbuf_copyfrom(&tmpReceived.time, sizeof(tmSent));
+    packetbuf_copyfrom(&tmSent, sizeof(tmSent));
 
     rimeaddr_t addr;
 
