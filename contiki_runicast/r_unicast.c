@@ -157,3 +157,7 @@ PROCESS_THREAD(test_runicast_process, ev, data)
  *make
  * b) compare the latency with that from unicast exercise. Explain the differences (add your answer as comments or separate file).
  */
+
+/*
+* ANSWER: The round-trip time is usually 5 to 6 clock cycles wich relates to about 40 ms
+*/
