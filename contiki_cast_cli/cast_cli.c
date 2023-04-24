@@ -67,13 +67,12 @@ static const struct unicast_callbacks unicast_callbacks = {recv_uc};
 static struct unicast_conn uc;
 static void recv_uc(struct unicast_conn *c, const rimeaddr_t *from)
 {
-  printf("unicast message received from %d\n", from->u8[0]);
   /* turn on blue led */
   leds_on(LEDS_BLUE);
   ctimer_set(&leds_off_timer_send, CLOCK_SECOND / 8, timerCallback_turnOffLeds, NULL);
   char message[32];
   packetbuf_copyto(&message);
-  printf("Received message: %s", message);
+  printf("unicast message received from %d: %s", from->u8[0], message);
   /*********************/
   /* MISSING CODE HERE */
   /*********************/
