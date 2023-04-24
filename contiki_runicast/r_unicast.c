@@ -31,6 +31,7 @@ static clock_time_t rtt;
 struct timeMessage {
 	clock_time_t time;
 	unsigned short originator;
+	bool isAnswer;
 };
 
 static void timerCallback_turnOffLeds()
@@ -47,19 +48,19 @@ static void recv_runicast(struct runicast_conn *c, rimeaddr_t *from, uint8_t seq
    * struct tmReceived we have declared and instantiated above (line 26)
    */
   packetbuf_copyto(&tmReceived);
-
-  printf("time received = %d clock ticks", (uint16_t)tmReceived.time);
-  printf(" = %d secs ", (uint16_t)tmReceived.time / CLOCK_SECOND);
-  printf("%d millis ", (1000L * ((uint16_t)tmReceived.time  % CLOCK_SECOND)) / CLOCK_SECOND);
-  printf("originator = %d\n", tmReceived.originator);
-  leds_on(LEDS_BLUE);
-  ctimer_set(&ledTimer, CLOCK_SECOND / 8, timerCallback_turnOffLeds, NULL);
-
-    /* prepare the unicast packet to be sent. Write the contents of the struct, where we
+    printf("time received = %d clock ticks", (uint16_t)tmReceived.time);
+    printf(" = %d secs ", (uint16_t)tmReceived.time / CLOCK_SECOND);
+    printf("%d millis ", (1000L * ((uint16_t)tmReceived.time  % CLOCK_SECOND)) / CLOCK_SECOND);
+    printf("originator = %d\n", tmReceived.originator);
+    leds_on(LEDS_BLUE);
+    ctimer_set(&ledTimer, CLOCK_SECOND / 8, timerCallback_turnOffLeds, NULL);
+  if(!tmReceived.isAnswer){
+     /* prepare the unicast packet to be sent. Write the contents of the struct, where we
      * have just written the time and the id into, to the packet we intend to send
      */
     tmSent.time = tmReceived.time;
     tmSent.originator = node_id;
+    tmSent.isAnswer = true;
     packetbuf_copyfrom(&tmSent, sizeof(tmSent));
 
     rimeaddr_t addr;
@@ -74,6 +75,9 @@ static void recv_runicast(struct runicast_conn *c, rimeaddr_t *from, uint8_t seq
     /* when calling runicast_send, we have to specify the address as the second argument (a pointer to the defined rimeaddr_t struct)
      * and then also the number of maximum transmissions */
     runicast_send(&runicast, &addr, MAX_RETRANSMISSIONS);
+  }else{
+         printf("Timestamp Difference",  clock_time() - (uint16_t)tmReceived.time);
+  }
 }
 
 static void sent_runicast(struct runicast_conn *c, rimeaddr_t *to, uint8_t retransmissions)
@@ -101,6 +105,7 @@ PROCESS_THREAD(test_runicast_process, ev, data)
   		tmSent.time = clock_time();
   		/* write the id of then node where the button is pressed into the packet */
   		tmSent.originator = node_id;
+  		tmSent.isAnswer = false;
 
   		/* prepare the unicast packet to be sent. Write the contents of the struct, where we
   		 * have just written the time and the id into, to the packet we intend to send
