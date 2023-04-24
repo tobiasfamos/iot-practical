@@ -72,7 +72,7 @@ static void recv_uc(struct unicast_conn *c, const rimeaddr_t *from)
   ctimer_set(&leds_off_timer_send, CLOCK_SECOND / 8, timerCallback_turnOffLeds, NULL);
   char message[32];
   packetbuf_copyto(&message);
-  printf("unicast message received from %d: %s", from->u8[0], message);
+  printf("unicast message received from %d: %s\n", from->u8[0], message);
   /*********************/
   /* MISSING CODE HERE */
   /*********************/
