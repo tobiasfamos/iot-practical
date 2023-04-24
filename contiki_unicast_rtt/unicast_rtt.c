@@ -88,7 +88,8 @@ static void recv_uc(struct unicast_conn *c, const rimeaddr_t *from)
         int clockDifference =  clock_time() - (uint16_t)tmReceived.time;
         int secondDifference = clockDifference / CLOCK_SECOND;
         int msDifference = (1000 * ((uint16_t)clockDifference  % CLOCK_SECOND)) / CLOCK_SECOND;
-        printf("Timestamp Difference is %d clock cylces which relates to %d s %d ms\n",clockDifference, secondDifference, msDifference);
+        printf("Timestamp Difference is %d clock cylces which relates to \x1b[32m%d s %d ms \x1b[0m\n",clockDifference, secondDifference, msDifference);
+
     }
 }
 
