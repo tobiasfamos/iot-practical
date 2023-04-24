@@ -77,8 +77,8 @@ static void recv_runicast(struct runicast_conn *c, rimeaddr_t *from, uint8_t seq
     runicast_send(&runicast, &addr, MAX_RETRANSMISSIONS);
   }else{
     int clockDifference =  clock_time() - (uint16_t)tmReceived.time;
-    int secondDifference = (uint16_t)tmReceived.time / CLOCK_SECOND)
-    int msDifference = (1000L * ((uint16_t)tmReceived.time  % CLOCK_SECOND)) / CLOCK_SECOND
+    int secondDifference = clockDifference / CLOCK_SECOND)
+    int msDifference = (1000 * ((uint16_t)clockDifference  % CLOCK_SECOND)) / CLOCK_SECOND
     printf("Timestamp Difference is %d clock cylces which relates to %d s %d ms\n",clockDifference, secondDifference, msDifference);
   }
 }
