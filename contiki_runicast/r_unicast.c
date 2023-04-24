@@ -31,7 +31,7 @@ static clock_time_t rtt;
 struct timeMessage {
 	clock_time_t time;
 	unsigned short originator;
-	bool isAnswer;
+	int isAnswer;
 };
 
 static void timerCallback_turnOffLeds()
@@ -54,13 +54,13 @@ static void recv_runicast(struct runicast_conn *c, rimeaddr_t *from, uint8_t seq
     printf("originator = %d\n", tmReceived.originator);
     leds_on(LEDS_BLUE);
     ctimer_set(&ledTimer, CLOCK_SECOND / 8, timerCallback_turnOffLeds, NULL);
-  if(!tmReceived.isAnswer){
+  if(!tmReceived.isAnswer == 1){
      /* prepare the unicast packet to be sent. Write the contents of the struct, where we
      * have just written the time and the id into, to the packet we intend to send
      */
     tmSent.time = tmReceived.time;
     tmSent.originator = node_id;
-    tmSent.isAnswer = true;
+    tmSent.isAnswer = 1;
     packetbuf_copyfrom(&tmSent, sizeof(tmSent));
 
     rimeaddr_t addr;
@@ -105,7 +105,7 @@ PROCESS_THREAD(test_runicast_process, ev, data)
   		tmSent.time = clock_time();
   		/* write the id of then node where the button is pressed into the packet */
   		tmSent.originator = node_id;
-  		tmSent.isAnswer = false;
+  		tmSent.isAnswer = 0;
 
   		/* prepare the unicast packet to be sent. Write the contents of the struct, where we
   		 * have just written the time and the id into, to the packet we intend to send
