@@ -154,4 +154,5 @@ PROCESS_THREAD(example_unicast_process, ev, data)
  * packet with its timestamp (is already done above) and THEN gets back a unicast packet with the
  * timestamp it has initially written into the first packet. Based on this packet, compute the
  * Route-trip time at the node initiating the packet exchange and print it to the serial interface.
+ * ANSWER: The Received is usually 5 or 6 clock ticks, thus at  about 40 to 40 ms
  */
