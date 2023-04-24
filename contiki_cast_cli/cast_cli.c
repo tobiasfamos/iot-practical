@@ -189,7 +189,8 @@ AUTOSTART_PROCESSES(&exercise_4_process);
  *  a) in the code above, we set up the command line interface and register and implement
  *  some commands. compile and upload the code and type "make login". Then, type "blink 10" and observe
  *  what happens. Check in the code where this is implemented, explain!.
- *
+ * -> THE BLUE LED BLINKS 10 TIMES
+ * T
  *  b) type "help". This displays you the list of commands which is
  *  registered. check the code in this file to see where which command is defined, implemented
  *  and registered!
