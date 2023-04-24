@@ -103,22 +103,10 @@ PROCESS_THREAD(shell_unicast_process, ev, data)
 		/* prepare the packet to be sent, copy the helloMessage into the packet. For this, we have to
 		 * give a pointer to the copiedData byte array as first argument, then the size as the second argument*/
 
-		/*********************/
-		/* MISSING CODE HERE */
-		/*********************/
-
-        /* when the button is pressed, read the current time and write it to the
-        * previously declared tmSent struct */
-        tmSent.time = clock_time();
-        /* write the id of then node where the button is pressed into the packet */
-        tmSent.originator = node_id;
-        tmSent.isAnswer = 0;
-
-
         /* prepare the unicast packet to be sent. Write the contents of the struct, where we
         * have just written the time and the id into, to the packet we intend to send
         */
-        packetbuf_copyfrom(&tmSent, sizeof(tmSent));
+        packetbuf_copyfrom(&copiedData, sizeof(copiedData));
 
 
         /* specify the address of the unicast */
