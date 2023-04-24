@@ -184,8 +184,8 @@ PROCESS_THREAD(exercise_4_process, ev, data)
 {
   PROCESS_BEGIN();
   serial_shell_init();
-  broadcast_open(&bc, BROADCAST_CHANNEL, &broadcast_call);
   unicast_open(&uc, UNICAST_CHANNEL, &unicast_callbacks);
+  broadcast_open(&bc, BROADCAST_CHANNEL, &broadcast_call);
   shell_register_command(&blink_command);
   shell_register_command(&broadcast_command);
   shell_register_command(&unicast_command);
