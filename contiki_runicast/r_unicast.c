@@ -76,7 +76,7 @@ static void recv_runicast(struct runicast_conn *c, rimeaddr_t *from, uint8_t seq
      * and then also the number of maximum transmissions */
     runicast_send(&runicast, &addr, MAX_RETRANSMISSIONS);
   }else{
-         printf("Timestamp Difference",  clock_time() - (uint16_t)tmReceived.time);
+         printf("Timestamp Difference %d\n",  clock_time() - (uint16_t)tmReceived.time);
   }
 }
 
