@@ -63,7 +63,6 @@ static void recv_uc(struct unicast_conn *c, const rimeaddr_t *from)
   printf(" = %d secs ", (uint16_t)tmReceived.time / CLOCK_SECOND);
   printf("%d millis ", (1000L * ((uint16_t)tmReceived.time  % CLOCK_SECOND)) / CLOCK_SECOND);
   printf("originator = %d\n", tmReceived.originator);
-  printf("IsAnswer: %d", tmReceived.isAnswer);
 
     if(!tmReceived.isAnswer == 1){
         tmSent.time = tmReceived.time;
@@ -85,6 +84,11 @@ static void recv_uc(struct unicast_conn *c, const rimeaddr_t *from)
               unicast_send(&uc, &addr);
         }
         printf("sending packet to %u\n", addr.u8[0]);
+    }else{
+        int clockDifference =  clock_time() - (uint16_t)tmReceived.time;
+        int secondDifference = clockDifference / CLOCK_SECOND;
+        int msDifference = (1000 * ((uint16_t)clockDifference  % CLOCK_SECOND)) / CLOCK_SECOND;
+        printf("Timestamp Difference is %d clock cylces which relates to %d s %d ms\n",clockDifference, secondDifference, msDifference);
     }
 }
 
