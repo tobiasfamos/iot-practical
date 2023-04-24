@@ -72,8 +72,8 @@ static void recv_uc(struct unicast_conn *c, const rimeaddr_t *from)
   leds_on(LEDS_BLUE);
   ctimer_set(&leds_off_timer_send, CLOCK_SECOND / 8, timerCallback_turnOffLeds, NULL);
   char message[32];
-  packetbuf_copyto(&message)
-  printf(message)
+  packetbuf_copyto(&message);
+  printf(message);
   /*********************/
   /* MISSING CODE HERE */
   /*********************/
