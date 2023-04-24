@@ -112,6 +112,7 @@ PROCESS_THREAD(shell_unicast_process, ev, data)
         /* specify the address of the unicast */
         rimeaddr_t addr;
         addr.u8[0] = 33;
+        addr.u8[1] = 0;
 
         unicast_send(&uc, &addr);
 
