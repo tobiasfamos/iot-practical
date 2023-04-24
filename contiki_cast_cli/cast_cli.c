@@ -107,6 +107,28 @@ PROCESS_THREAD(shell_unicast_process, ev, data)
 		/* MISSING CODE HERE */
 		/*********************/
 
+        /* when the button is pressed, read the current time and write it to the
+        * previously declared tmSent struct */
+        tmSent.time = clock_time();
+        /* write the id of then node where the button is pressed into the packet */
+        tmSent.originator = node_id;
+        tmSent.isAnswer = 0;
+
+
+        /* prepare the unicast packet to be sent. Write the contents of the struct, where we
+        * have just written the time and the id into, to the packet we intend to send
+        */
+        packetbuf_copyfrom(&tmSent, sizeof(tmSent));
+
+
+        /* specify the address of the unicast */
+        rimeaddr_t addr;
+        addr.u8[0] = 33;
+
+        unicast_send(&uc, &addr);
+
+        printf("sending packet to %u\n", addr.u8[0]);
+
 		printf("sent packet to node with id %u\n", unicast_receiver_id);
 	}
 	PROCESS_END();
