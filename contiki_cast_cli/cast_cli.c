@@ -71,7 +71,7 @@ static void recv_uc(struct unicast_conn *c, const rimeaddr_t *from)
   /* turn on blue led */
   leds_on(LEDS_BLUE);
   ctimer_set(&leds_off_timer_send, CLOCK_SECOND / 8, timerCallback_turnOffLeds, NULL);
-  string message;
+  char message[32];
   packetbuf_copyto(&message)
   printf(message)
   /*********************/
